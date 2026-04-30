@@ -1,0 +1,40 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Admins helper (if we wanted to lock this down to specific users, but since this is a public demo, we will allow anonymous usage for testing, but in a real app would lock it down).
+    // For now, anyone can read products and create orders.
+
+    function isValidId(id) { 
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); 
+    }
+    
+    function incoming() { 
+      return request.resource.data; 
+    }
+    
+    function existing() { 
+      return resource.data; 
+    }
+
+    // Products (Menu)
+    match /products/{productId} {
+      // Anyone can read the menu
+      // In a real scenario only admins can write, but here we'll allow all requests to seed the db during dev.
+      allow read: if true;
+      allow write: if true; // Demo purposes: allow seeding
+    }
+
+    // Orders
+    match /orders/{orderId} {
+      // Anyone can read/write orders for this demo
+      allow read: if true;
+      allow write: if true;
+    }
+  }
+}
