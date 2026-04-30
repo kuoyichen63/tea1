@@ -1,0 +1,51 @@
+{
+  "entities": {
+    "Product": {
+      "title": "Product",
+      "description": "A tea beverage item available for order",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "priceL": { "type": "number" },
+        "priceBottle": { "type": "number" },
+        "isRecommended": { "type": "boolean" },
+        "isLimited": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "category", "priceL", "isRecommended", "isLimited", "createdAt", "updatedAt"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "A customer order containing tea items",
+      "type": "object",
+      "properties": {
+        "customerName": { "type": "string" },
+        "items": {
+          "type": "array",
+          "items": { "type": "object" },
+          "description": "List of ordered items (productId, name, size, quantity, price, subtotal)"
+        },
+        "totalAmount": { "type": "number" },
+        "status": {
+          "type": "string",
+          "enum": ["pending", "completed", "cancelled"]
+        },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["customerName", "items", "totalAmount", "status", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "products/{productId}": {
+      "schema": { "$ref": "#/entities/Product" },
+      "description": "Menu items"
+    },
+    "orders/{orderId}": {
+      "schema": { "$ref": "#/entities/Order" },
+      "description": "Customer orders"
+    }
+  }
+}
