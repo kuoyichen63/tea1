@@ -1,6 +1,6 @@
 {
-  "name": "Bubble Tea Ordering System",
-  "description": "A bubble tea ordering application with a customer storefront and an admin dashboard, powered by Firebase.",
+  "name": "Tea Ordering System",
+  "description": "A front-end and back-end ordering system for a tea shop, using Firebase.",
   "requestFramePermissions": [],
   "majorCapabilities": []
 }
